@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Turlar | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">finance</span>
+            <h1 class="page-heading">Kirim va chiqim turlari</h1>
+            <p class="section-copy">Oylik, avans, yo'lkira, tushlik kabi turlarni alohida yuriting.</p>
+        </div>
+        <a class="button button--primary" href="{% url 'category-create' %}">Yangi tur</a>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            <h2 class="section-title">Kirim turlari</h2>
+            {% if income_categories %}
+                <div class="resource-list">
+                    {% for category in income_categories %}
+                        <div class="resource-row">
+                            <div class="resource-row__main">
+                                <span class="resource-name">{{ category.name }}</span>
+                                <span class="badge badge--income">{{ category.get_type_display }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3 class="section-title">Kirim turlari yo'q</h3>
+                    <p>Kirimlarni ajratish uchun yangi tur yarating.</p>
+                </div>
+            {% endif %}
+        </article>
+
+        <article class="section-card">
+            <h2 class="section-title">Chiqim turlari</h2>
+            {% if expense_categories %}
+                <div class="resource-list">
+                    {% for category in expense_categories %}
+                        <div class="resource-row">
+                            <div class="resource-row__main">
+                                <span class="resource-name">{{ category.name }}</span>
+                                <span class="badge badge--expense">{{ category.get_type_display }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3 class="section-title">Chiqim turlari yo'q</h3>
+                    <p>Chiqimlarni ajratish uchun yangi tur yarating.</p>
+                </div>
+            {% endif %}
+        </article>
+    </section>
+{% endblock %}

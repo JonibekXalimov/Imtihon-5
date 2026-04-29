@@ -1,0 +1,17 @@
+<section class="auth-layout">
+    <article class="auth-panel">
+        <span class="page-kicker">error {{ code }}</span>
+        <h1 class="auth-title">{{ title }}</h1>
+        <p>{{ message }}</p>
+    </article>
+
+    <article class="form-panel">
+        <span class="page-kicker">navigate</span>
+        <h2 class="section-title">Asosiy yo'nalishlar</h2>
+        <p class="section-copy">Sahifa topilmasa yoki serverda xatolik bo'lsa, quyidagi tezkor havolalardan foydalaning.</p>
+        <div class="shortcuts-grid spacer-top">
+            <a class="button button--primary button--full" href="{% url 'home' %}">Dashboardga qaytish</a>
+            <a class="button button--ghost button--full" href="{% url 'transactions:list' %}">Tarixni ochish</a>
+        </div>
+    </article>
+</section>

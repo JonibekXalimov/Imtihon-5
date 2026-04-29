@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Item | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">delete</span>
+            <h1 class="page-heading">O'chirishni tasdiqlang</h1>
+            <p class="section-copy">Quyidagi obyektni o'chirishdan oldin yana bir bor tekshirib chiqing.</p>
+        </div>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            <div class="summary-card">
+                <h3>{{ object }}</h3>
+                <p>Balans nol bo'lmasa, backend bu amalni baribir to'xtatadi.</p>
+            </div>
+
+            <form method="post" class="stack-form spacer-top">
+                {% csrf_token %}
+                <div class="action-row">
+                    <button class="button button--danger" type="submit">Ha, o'chirish</button>
+                    <a class="button button--ghost" href="{% url 'wallet-list' %}">Bekor qilish</a>
+                </div>
+            </form>
+        </article>
+
+        <aside class="tip-card">
+            <h3>Ehtiyotkorlik</h3>
+            <p>O'chirishdan oldin kerakli ma'lumot boshqa bo'limlarda ishlatilmayotganini tekshiring.</p>
+        </aside>
+    </section>
+{% endblock %}

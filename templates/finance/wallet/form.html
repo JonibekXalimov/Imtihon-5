@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Hisobni tahrirlash{% else %}Yangi hisob{% endif %} | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">wallet form</span>
+            <h1 class="page-heading">{% if object %}Hisobni tahrirlash{% else %}Yangi hisob yaratish{% endif %}</h1>
+            <p class="section-copy">
+                {% if object %}
+                    Bu yerda faqat hisob nomi boshqariladi.
+                {% else %}
+                    Hisob nomi va boshlang'ich summani kiriting.
+                {% endif %}
+            </p>
+        </div>
+        <a class="button button--ghost" href="{% url 'wallet-list' %}">Ortga</a>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            <form method="post" class="stack-form">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-errors">
+                                {% for error in field.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="action-row">
+                    <button class="button button--primary" type="submit">Saqlash</button>
+                    <a class="button button--ghost" href="{% url 'wallet-list' %}">Bekor qilish</a>
+                </div>
+            </form>
+        </article>
+
+
+    </section>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Hisoblar | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">finance</span>
+            <h1 class="page-heading">Hisoblar</h1>
+            <p class="section-copy">Naqd pul, karta va valyuta hisoblarini shu yerda boshqaring.</p>
+        </div>
+        <a class="button button--primary" href="{% url 'wallet-create' %}">Yangi hisob</a>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            {% if wallets %}
+                <div class="resource-list">
+                    {% for wallet in wallets %}
+                        <div class="resource-row">
+                            <div class="resource-row__main">
+                                <span class="resource-name">{{ wallet.name }}</span>
+                                <span class="resource-caption">Yaratilgan: {{ wallet.created_at|date:"d M Y" }}</span>
+                            </div>
+                            <div class="resource-row__meta">
+                                <strong class="resource-amount">{{ wallet.balance|floatformat:2 }} So'm</strong>
+                                <div class="action-row">
+                                    <a class="button button--ghost button--small" href="{% url 'wallet-update' wallet.pk %}">Edit</a>
+                                    <a class="button button--danger button--small" href="{% url 'wallet-delete' wallet.pk %}">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h2 class="section-title">Hisoblar hali yo'q</h2>
+                    <p>Balansni ko'rish uchun kamida bitta hisob yarating.</p>
+                </div>
+            {% endif %}
+        </article>
+    </section>
+{% endblock %}

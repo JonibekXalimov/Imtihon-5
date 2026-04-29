@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Tarix | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">transactions</span>
+            <h1 class="page-heading">Tranzaksiya tarixi</h1>
+            <p class="section-copy">Filtrlar yordamida kirim va chiqim yozuvlarini ko'ring.</p>
+        </div>
+
+    </section>
+
+    <section class="filter-panel">
+        <form method="get" class="filter-grid">
+            <div class="field">
+                <label for="type">Turi</label>
+                <select id="type" name="type">
+                    <option value="">Barchasi</option>
+                    <option value="income" {% if request.GET.type == 'income' %}selected{% endif %}>Kirim</option>
+                    <option value="expense" {% if request.GET.type == 'expense' %}selected{% endif %}>Chiqim</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="category">Tur</label>
+                <select id="category" name="category">
+                    <option value="">Barchasi</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:'s' %}selected{% endif %}>
+                            {{ category.name }} - {{ category.get_type_display }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label for="date">Sana</label>
+                <input id="date" type="date" name="date" value="{{ request.GET.date }}">
+            </div>
+            <div class="field">
+                <label for="min_amount">Minimum summa</label>
+                <input id="min_amount" type="number" step="0.01" min="0" name="min_amount" value="{{ request.GET.min_amount }}" placeholder="0.00">
+            </div>
+            <div class="field">
+                <label for="max_amount">Maximum summa</label>
+                <input id="max_amount" type="number" step="0.01" min="0" name="max_amount" value="{{ request.GET.max_amount }}" placeholder="0.00">
+            </div>
+            <div class="field">
+                <label class="sr-only" for="apply-filters">Filter</label>
+                <button id="apply-filters" class="button button--primary button--full" type="submit">Filtrlash</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            {% if transactions %}
+                <div class="resource-list">
+                    {% for transaction in transactions %}
+                        <div class="resource-row">
+                            <div class="resource-row__main">
+                                <span class="badge badge--{{ transaction.transaction_type }}">{{ transaction.get_transaction_type_display }}</span>
+                                <span class="resource-name">
+                                    {% if transaction.transaction_type == "income" %}
+                                        {{ transaction.wallet.name|default:"Hisob" }} | {{ transaction.category.name|default:"Tur" }}
+                                    {% else %}
+                                        {{ transaction.wallet.name|default:"Hisob" }} | {{ transaction.category.name|default:"Tur" }}
+                                    {% endif %}
+                                </span>
+                                <span class="resource-caption">{{ transaction.created_at|date:"d M Y, H:i" }}</span>
+                            </div>
+                            <div class="resource-row__meta">
+                                <strong class="resource-amount">{{ transaction.amount|floatformat:2 }} So'm</strong>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h2 class="section-title">Tranzaksiyalar topilmadi</h2>
+                    <p>Yangi yozuv qo'shing yoki filtrni tozalab qayta urinib ko'ring.</p>
+                </div>
+            {% endif %}
+        </article>
+
+    </section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Profile | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">profile</span>
+            <h1 class="page-heading">{{ user.username }}</h1>
+        </div>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            <div class="stats-grid">
+                <div class="summary-card">
+                    <h3>Username</h3>
+                    <p>{{ user.username }}</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Email</h3>
+                    <p>{{ user.email|default:"Email kiritilmagan" }}</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Yosh</h3>
+                    <p>{{ profile.age|default:"Kiritilmagan" }}</p>
+                </div>
+            </div>
+
+            <div class="section-card spacer-top">
+                <span class="page-kicker">bio</span>
+                <h2 class="section-title">Qisqacha ma'lumot</h2>
+                <p class="section-copy">{{ profile.bio|default:"Bio hali kiritilmagan." }}</p>
+            </div>
+        </article>
+    </section>
+{% endblock %}

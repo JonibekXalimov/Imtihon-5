@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Chiqim | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">transactions</span>
+            <h1 class="page-heading">Chiqim qo'shish</h1>
+            <p class="section-copy">Qaysi hisobdan, qaysi tur bo'yicha chiqim qilinganini ko'rsating.</p>
+        </div>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            <form method="post" class="stack-form">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-errors">
+                                {% for error in field.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button class="button button--primary" type="submit">Chiqimni saqlash</button>
+            </form>
+        </article>
+
+        <aside class="tip-card">
+            <h3>Eslatma</h3>
+            <p>Faqat chiqim turlari bu yerda ko'rinadi.</p>
+        </aside>
+    </section>
+{% endblock %}

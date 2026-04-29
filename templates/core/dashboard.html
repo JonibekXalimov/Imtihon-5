@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t.dashboard_title }} | paynet{% endblock %}
+
+{% block extra_head %}
+    <style>
+        .template-promo {
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(240px, 0.75fr);
+            gap: 1.25rem;
+            align-items: stretch;
+            padding: 1.25rem;
+            border-radius: 24px;
+            border: 1px solid rgba(225, 233, 244, 0.98);
+            background:
+                linear-gradient(135deg, rgba(238, 251, 245, 0.96) 0%, rgba(255, 255, 255, 0.98) 48%, rgba(238, 244, 255, 0.98) 100%);
+            box-shadow: 0 16px 34px rgba(15, 23, 42, 0.07);
+            margin-bottom: 1rem;
+        }
+
+        .template-promo__content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1.35rem;
+        }
+
+        .template-promo__eyebrow {
+            color: var(--pn-muted);
+            font-size: 0.86rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .template-promo__title {
+            max-width: 680px;
+            margin: 0.45rem 0 0.7rem;
+            font-size: clamp(1.55rem, 3vw, 2.65rem);
+            font-weight: 800;
+            line-height: 1.08;
+        }
+
+        .template-promo__copy {
+            max-width: 620px;
+            color: var(--pn-muted);
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .template-promo__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .template-promo__tags li {
+            padding: 0.42rem 0.66rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(209, 221, 241, 0.72);
+            font-size: 0.86rem;
+            font-weight: 800;
+            color: var(--pn-muted);
+        }
+
+        .template-promo__visual {
+            min-height: 230px;
+            border-radius: 22px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(247, 250, 255, 0.92) 100%);
+            border: 1px solid rgba(209, 221, 241, 0.85);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.8rem;
+            padding: 1.1rem;
+        }
+
+        .template-promo__card {
+            padding: 0.9rem 1rem;
+            border-radius: 18px;
+            background: #ffffff;
+            border: 1px solid rgba(225, 233, 244, 0.98);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        }
+
+        .template-promo__card strong {
+            display: block;
+            color: var(--pn-text);
+            font-size: 1.05rem;
+        }
+
+        .template-promo__card span {
+            color: var(--pn-muted);
+            font-size: 0.88rem;
+            font-weight: 800;
+        }
+
+        @media (max-width: 991.98px) {
+            .template-promo {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section class="hero-card">
+        <div>
+            <span class="page-kicker">{{ t.total_balance }}</span>
+            <h1 class="hero-balance">{{ total_wallet|floatformat:2 }} So'm</h1>
+            <p class="section-copy">{{ t.total_balance_copy }}</p>
+        </div>
+
+        <div class="hero-actions">
+            <a class="button button--soft" href="{% url 'transactions:add-income' %}">{{ t.add_income }}</a>
+            <a class="button button--ghost" href="{% url 'transactions:spend' %}">{{ t.add_expense }}</a>
+        </div>
+    </section>
+
+    <section class="balance-grid">
+        <article class="balance-card">
+            <span class="balance-label">{{ t.accounts }}</span>
+            <strong class="balance-value">{{ wallets|length }}</strong>
+        </article>
+        <article class="balance-card">
+            <span class="balance-label">{{ t.total_income }}</span>
+            <strong class="balance-value">{{ total_income|floatformat:2 }} So'm</strong>
+        </article>
+        <article class="balance-card">
+            <span class="balance-label">{{ t.total_expense }}</span>
+            <strong class="balance-value">{{ total_expense|floatformat:2 }} So'm</strong>
+        </article>
+    </section>
+
+    <section class="template-promo">
+        <div class="template-promo__content">
+            <div>
+                <span class="template-promo__eyebrow">Paynet Finance</span>
+                <h2 class="template-promo__title">Kirim va chiqimni tartibda yuritish endi ancha oson.</h2>
+                <p class="template-promo__copy">
+                    Har kuni pul oqimini ko'rib boring, rejalaringizni aniqroq qiling va ortiqcha xarajatlarni vaqtida sezing.
+                </p>
+            </div>
+
+            <ul class="template-promo__tags">
+                <li>3 tilda</li>
+                <li>Tezkor nazorat</li>
+                <li>Sodda hisobot</li>
+            </ul>
+        </div>
+
+        <div class="template-promo__visual" aria-hidden="true">
+            <div class="template-promo__card">
+                <strong>Kundalik nazorat</strong>
+                <span>Kirim va chiqim bir joyda</span>
+            </div>
+            <div class="template-promo__card">
+                <strong>Reja bilan harakat</strong>
+                <span>Balans doim ko'z oldingizda</span>
+            </div>
+            <div class="template-promo__card">
+                <strong>Minimal panel</strong>
+                <span>Faqat kerakli ma'lumotlar</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            <div class="section-head">
+                <div>
+                    <span class="page-kicker">tarix</span>
+                    <h2 class="section-title">{{ t.recent_transactions }}</h2>
+                </div>
+                <a class="button button--ghost button--small" href="{% url 'transactions:list' %}">{{ t.all }}</a>
+            </div>
+
+            {% if last_transactions %}
+                <div class="resource-list">
+                    {% for transaction in last_transactions %}
+                        <div class="resource-row">
+                            <div class="resource-row__main">
+                                <span class="badge badge--{{ transaction.transaction_type }}">{{ transaction.get_transaction_type_display }}</span>
+                                <span class="resource-name">
+                                    {% if transaction.transaction_type == "income" %}
+                                        {{ transaction.wallet.name|default:"Hisob" }} | {{ transaction.category.name|default:"Kirim" }}
+                                    {% else %}
+                                        {{ transaction.wallet.name|default:"Hisob" }} | {{ transaction.category.name|default:"Chiqim" }}
+                                    {% endif %}
+                                </span>
+                                <span class="resource-caption">{{ transaction.created_at|date:"d M Y, H:i" }}</span>
+                            </div>
+                            <div class="resource-row__meta">
+                                <strong class="resource-amount">{{ transaction.amount|floatformat:2 }} So'm</strong>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <h3 class="section-title">Hali yozuv yo'q</h3>
+                    <p>Kirim yoki chiqim qo'shilgandan keyin shu yerda ko'rinadi.</p>
+                </div>
+            {% endif %}
+        </article>
+    </section>
+{% endblock %}

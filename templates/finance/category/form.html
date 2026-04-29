@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Yangi tur | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">tur formasi</span>
+            <h1 class="page-heading">Yangi tur</h1>
+            <p class="section-copy">Kirim yoki chiqim turining nomini tanlang.</p>
+        </div>
+        <a class="button button--ghost" href="{% url 'category-list' %}">Ortga</a>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            <form method="post" class="stack-form">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-errors">
+                                {% for error in field.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="action-row">
+                    <button class="button button--primary" type="submit">Saqlash</button>
+                    <a class="button button--ghost" href="{% url 'category-list' %}">Bekor qilish</a>
+                </div>
+            </form>
+        </article>
+
+        <aside class="tip-card">
+            <h3>Eslatma</h3>
+            <p>Kirim sahifasida faqat kirim turlari, chiqim sahifasida faqat chiqim turlari ko'rinadi.</p>
+        </aside>
+    </section>
+{% endblock %}

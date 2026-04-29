@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Kirim | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">transactions</span>
+            <h1 class="page-heading">Kirim qo'shish</h1>
+            <p class="section-copy">Kirim turi, hisob va summani kiriting.</p>
+        </div>
+        <a class="button button--ghost" href="{% url 'transactions:list' %}">Ortga</a>
+    </section>
+
+    <section class="content-grid">
+        <article class="section-card">
+            <form method="post" class="stack-form">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-errors">
+                                {% for error in field.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button class="button button--primary" type="submit">Kirimni saqlash</button>
+            </form>
+        </article>
+
+        <aside class="tip-card">
+            <h3>Eslatma</h3>
+            <p>Bu amal tanlangan hisob balansini darhol oshiradi.</p>
+        </aside>
+    </section>
+{% endblock %}

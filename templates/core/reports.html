@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ t.reports }} | paynet{% endblock %}
+
+{% block content %}
+    <section class="section-head">
+        <div>
+            <span class="page-kicker">{{ t.reports }}</span>
+            <h1 class="page-heading">{{ t.daily_weekly_monthly }}</h1>
+            <p class="section-copy">Kirim va chiqim summalari kun, hafta va oy bo'yicha ko'rsatiladi.</p>
+        </div>
+        <a class="button button--ghost" href="{% url 'home' %}">Ortga</a>
+    </section>
+
+    <section class="stats-grid">
+        {% for row in report_rows %}
+            <article class="summary-card">
+                <span class="balance-label">{{ row.label }}</span>
+                <strong class="balance-value">{{ row.net|floatformat:2 }} So'm</strong>
+                <div class="resource-list">
+                    <div class="resource-row">
+                        <div class="resource-row__main">
+                            <span class="badge badge--income">Kirim</span>
+                            <span class="resource-name">{{ row.income|floatformat:2 }} So'm</span>
+                        </div>
+                    </div>
+                    <div class="resource-row">
+                        <div class="resource-row__main">
+                            <span class="badge badge--expense">Chiqim</span>
+                            <span class="resource-name">{{ row.expense|floatformat:2 }} So'm</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+{% endblock %}
